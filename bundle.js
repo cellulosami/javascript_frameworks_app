@@ -8,14 +8,46 @@ module.exports = function (n) {
 var number = 7;
 document.querySelector(".data").innerHTML = number;
 
-axios.get("https://api.github.com/repos/vuejs/vue")
-  .then(function (response) {
-    console.log("yay");
+var frameworkData = [];
+
+function getVue() {
+  return axios.get("https://api.github.com/repos/vuejs/vue");
+}
+function getAngular() {
+  return axios.get("https://api.github.com/repos/angular/angular.js");
+}
+function getEmber() {
+  return axios.get("https://api.github.com/repos/emberjs/ember.js");
+}
+function getSvelte() {
+  return axios.get("https://api.github.com/repos/sveltejs/svelte");
+}
+function getReact() {
+  return axios.get("https://api.github.com/repos/facebook/react");
+}
+
+Promise.all([getVue(), getAngular(), getEmber(), getSvelte(), getReact()])
+  .then(function (results) {
+    results.forEach(function (response) {
+      console.log(response.data);
+      let appName = response.data.name;
+      let stars = response.data.stargazers_count;
+      let watchers = response.data.subscribers_count;
+      let forks = response.data.forks_count;
+      let data = {
+        "forks": forks,
+        "watchers": watchers,
+        "Stars": stars
+      };
+      frameworkData[appName] = data;
+    });
   })
   .catch(function (error) {
-    console.log("boo");
     console.log(error);
   });
+
+console.log(frameworkData);
+
 },{"axios":2}],2:[function(require,module,exports){
 module.exports = require('./lib/axios');
 },{"./lib/axios":4}],3:[function(require,module,exports){
