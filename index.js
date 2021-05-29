@@ -96,11 +96,15 @@ function buildChart(name) {
   //get chart-specific data
   let chartData = {};
   let labels = [];
+  let data = [];
   frameworkData.forEach(function (framework) {
     labels.push(framework.name);
+    data.push(framework[`${name}`]);
   });
 
   chartData.labels = labels;
+  chartData.data = data;
+  chartData.label = `Number of ${capitalize(name)}`;
 
   renderChart(ctx, chartData);
 }
@@ -111,8 +115,8 @@ function renderChart(ctx, chartData) {
     data: {
       labels: chartData.labels,
       datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2],
+        label: chartData.label,
+        data: chartData.data,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
