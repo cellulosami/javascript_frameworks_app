@@ -41,6 +41,7 @@ function getAll() {
         frameworkData.push(data);
       });
 
+      calculatePopularity();
       buildCharts();
     })
     .catch(function (error) {
@@ -53,14 +54,38 @@ function capitalize(string) {
 }
 
 function buildCharts() {
-  buildChart("stars");
-  buildChart("watchers");
-  buildChart("forks");
+  let chartOptions = {
+    name: "stars",
+    type: "bar",
+    label: "Number of Stars"
+  };
+  buildChart(chartOptions);
+
+  chartOptions = {
+    name: "watchers",
+    type: "bar",
+    label: "Number of Watchers"
+  };
+  buildChart(chartOptions);
+
+  chartOptions = {
+    name: "forks",
+    type: "bar",
+    label: "Number of Forks"
+  };
+  buildChart(chartOptions);
+
+  chartOptions = {
+    name: "popularity",
+    type: "pie",
+    label: "Popularity"
+  };
+  buildChart(chartOptions);
 }
 
-function buildChart(name) {
+function buildChart(chartOptions) {
   //get context
-  let ctx = document.getElementById(`${name}-chart`).getContext('2d');
+  let ctx = document.getElementById(`${chartOptions.name}-chart`).getContext('2d');
 
   //get chart-specific data
   let chartData = {};
@@ -69,19 +94,20 @@ function buildChart(name) {
 
   frameworkData.forEach(function (framework) {
     labels.push(framework.name);
-    data.push(framework[`${name}`]);
+    data.push(framework[`${chartOptions.name}`]);
   });
 
   chartData.labels = labels;
   chartData.data = data;
-  chartData.label = `Number of ${capitalize(name)}`;
-  chartData.type = "bar";
+  chartData.label = chartOptions.label;
+  chartData.type = chartOptions.type;
+  chartData.ctx = ctx;
 
-  renderChart(ctx, chartData);
+  renderChart(chartData);
 }
 
-function renderChart(ctx, chartData) {
-  var myChart = new Chart(ctx, {
+function renderChart(chartData) {
+  var myChart = new Chart(chartData.ctx, {
     type: chartData.type,
     data: {
       labels: chartData.labels,
@@ -111,12 +137,10 @@ function renderChart(ctx, chartData) {
   });
 }
 
-function buildPopularityChart() {
-
-}
-
 function calculatePopularity() {
-  var popularity = {};
+  frameworkData.forEach(function (framework) {
+    framework.popularity = 1;
+  });
   //for each attribute, get the total count. Then, divide a particular framework's count by the total to get their percent of that pie
 
   //total each frameworks percent for each attribute, then divide by the number of attributes to get their overall percentage
