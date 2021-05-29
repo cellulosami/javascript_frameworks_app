@@ -147,12 +147,9 @@ function calculatePopularity() {
     let starsPercent = framework.stars / starsTotal;
     let watchersPercent = framework.watchers / watchersTotal;
     let forksPercent = framework.forks / forksTotal;
-    let popularity = ((starsPercent + watchersPercent + forksPercent) / 3).toFixed(2);
+    let popularity = ((starsPercent + watchersPercent + forksPercent) / 3).toFixed(2) * 100;
     framework.popularity = popularity;
   });
-  //for each attribute, get the total count. Then, divide a particular framework's count by the total to get their percent of that pie
-
-  //total each frameworks percent for each attribute, then divide by the number of attributes to get their overall percentage
 }
 
 function sumFrameworkAttribute(attribute) {
