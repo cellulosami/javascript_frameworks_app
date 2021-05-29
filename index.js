@@ -66,6 +66,7 @@ function buildChart(name) {
   let chartData = {};
   let labels = [];
   let data = [];
+
   frameworkData.forEach(function (framework) {
     labels.push(framework.name);
     data.push(framework[`${name}`]);
@@ -74,13 +75,14 @@ function buildChart(name) {
   chartData.labels = labels;
   chartData.data = data;
   chartData.label = `Number of ${capitalize(name)}`;
+  chartData.type = "bar";
 
   renderChart(ctx, chartData);
 }
 
 function renderChart(ctx, chartData) {
   var myChart = new Chart(ctx, {
-    type: 'bar',
+    type: chartData.type,
     data: {
       labels: chartData.labels,
       datasets: [{
@@ -104,14 +106,20 @@ function renderChart(ctx, chartData) {
       }]
     },
     options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      },
       responsive: false
     }
   });
+}
+
+function buildPopularityChart() {
+
+}
+
+function calculatePopularity() {
+  var popularity = {};
+  //for each attribute, get the total count. Then, divide a particular framework's count by the total to get their percent of that pie
+
+  //total each frameworks percent for each attribute, then divide by the number of attributes to get their overall percentage
 }
 
 getAll();
