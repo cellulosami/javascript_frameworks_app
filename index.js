@@ -27,7 +27,7 @@ function getAll() {
     .then(function (results) {
       //add each frameworks data to variable
       results.forEach(function (response) {
-        let appName = response.data.name;
+        let appName = capitalize(response.data.name);
         let stars = response.data.stargazers_count;
         let watchers = response.data.subscribers_count;
         let forks = response.data.forks_count;
@@ -35,16 +35,49 @@ function getAll() {
           "name": appName,
           "forks": forks,
           "watchers": watchers,
-          "Stars": stars
+          "stars": stars
         };
         frameworkData.push(data);
       });
 
-      document.querySelector(".data").innerHTML = frameworkData[1].name;
+      renderData();
     })
     .catch(function (error) {
       console.log(error);
     });
 }
 
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function renderData() {
+  let dataContainer = document.querySelector(".data");
+  frameworkData.forEach(function (framework) {
+    //render name
+    let x = document.createElement("H3");
+    let t = document.createTextNode(`Name: ${framework.name}`);
+    x.appendChild(t);
+    dataContainer.appendChild(x);
+
+    //render stars
+    x = document.createElement("P");
+    t = document.createTextNode(`Stars: ${framework.stars}`);
+    x.appendChild(t);
+    dataContainer.appendChild(x);
+
+    //render watchers
+    x = document.createElement("P");
+    t = document.createTextNode(`Watchers: ${framework.watchers}`);
+    x.appendChild(t);
+    dataContainer.appendChild(x);
+
+    //render forks
+    x = document.createElement("P");
+    t = document.createTextNode(`Forks: ${framework.forks}`);
+    x.appendChild(t);
+    dataContainer.appendChild(x);
+  });
+
+}
 getAll();
