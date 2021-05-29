@@ -26,8 +26,8 @@ function getReact() {
 function getAll() {
   Promise.all([getVue(), getAngular(), getEmber(), getSvelte(), getReact()])
     .then(function (results) {
+      //add each frameworks data to variable
       results.forEach(function (response) {
-        console.log(response.data);
         let appName = response.data.name;
         let stars = response.data.stargazers_count;
         let watchers = response.data.subscribers_count;
@@ -41,20 +41,11 @@ function getAll() {
         frameworkData.push(data);
       });
 
-      logData();
+      document.querySelector(".data").innerHTML = frameworkData[1].name;
     })
     .catch(function (error) {
       console.log(error);
     });
-}
-
-function logData() {
-  console.log(frameworkData);
-  console.log(frameworkData[0]);
-  console.log(frameworkData[1]);
-  console.log(frameworkData.length);
-  console.log(frameworkData);
-  document.querySelector(".data").innerHTML = frameworkData[1].name;
 }
 
 getAll();
