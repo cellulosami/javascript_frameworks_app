@@ -42,7 +42,6 @@ function getAll() {
         frameworkData.push(data);
       });
 
-      renderData();
       buildCharts();
     })
     .catch(function (error) {
@@ -54,36 +53,6 @@ function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function renderData() {
-  let dataContainer = document.querySelector(".data");
-  frameworkData.forEach(function (framework) {
-    //render name
-    let x = document.createElement("H3");
-    let t = document.createTextNode(`Name: ${framework.name}`);
-    x.appendChild(t);
-    dataContainer.appendChild(x);
-
-    //render stars
-    x = document.createElement("P");
-    t = document.createTextNode(`Stars: ${framework.stars}`);
-    x.appendChild(t);
-    dataContainer.appendChild(x);
-
-    //render watchers
-    x = document.createElement("P");
-    t = document.createTextNode(`Watchers: ${framework.watchers}`);
-    x.appendChild(t);
-    dataContainer.appendChild(x);
-
-    //render forks
-    x = document.createElement("P");
-    t = document.createTextNode(`Forks: ${framework.forks}`);
-    x.appendChild(t);
-    dataContainer.appendChild(x);
-  });
-
-}
-
 function buildCharts() {
   buildChart("stars");
   buildChart("watchers");
@@ -92,7 +61,7 @@ function buildCharts() {
 
 function buildChart(name) {
   //get context
-  let ctx = document.getElementById(`${name}Chart`).getContext('2d');
+  let ctx = document.getElementById(`${name}-chart`).getContext('2d');
 
   //get chart-specific data
   let chartData = {};
@@ -140,15 +109,13 @@ function renderChart(ctx, chartData) {
         y: {
           beginAtZero: true
         }
-      }
+      },
+      responsive: false
     }
   });
 }
 
 getAll();
-
-var ctx = document.getElementById('starsChart').getContext('2d');
-
 },{"axios":2,"chart.js":29}],2:[function(require,module,exports){
 module.exports = require('./lib/axios');
 },{"./lib/axios":4}],3:[function(require,module,exports){

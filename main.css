@@ -1,4 +1,6 @@
-#charts {
-  width: 400px;
+.chart-container {
+  float: left;
   height: 400px;
+  width: 400px;
+  margin: 1%;
 }
