@@ -1,14 +1,20 @@
 .chart-container {
   float: left;
-  height: 400px;
-  width: 400px;
-  margin-right: 4%;
-  margin-left: 4%;
+  height: 29.33%;
+  width: 29.33%;
+  min-height: 500px;
+  min-width: 500px;
+  margin-right: 2%;
+  margin-left: 2%;
 }
 
 .charts {
-  height: 400px;
+  width: 80%;
+  min-width: 600px;
+  height: 25%;
+  min-height: 500px;
   clear: left;
+  margin: auto;
 }
 
 .popularity-chart-container {
